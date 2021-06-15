@@ -1,5 +1,5 @@
 {
-    "name": "salvobee/url-utils",
+    "name": "salvobee/url-utilities",
     "description": "A simple set of utilities to work with URLs",
     "type": "library",
     "require-dev": {
