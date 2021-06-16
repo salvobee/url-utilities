@@ -1,6 +1,11 @@
 # URL Utilities
 A simple set of utilities to abstract in a more Object-Oriented fashion existing php url functions. 
 
+## Installation
+```
+composer require salvobee/url-utilities
+```
+
 ## Usage
 Build an instance of the parser using a valid URL as constructor's argument.
 
