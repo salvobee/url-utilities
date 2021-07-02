@@ -1,6 +1,5 @@
 <?php
 
-
 namespace SalvoBee\UrlUtilities;
 
 use InvalidArgumentException;
@@ -84,30 +83,32 @@ class Parser
         if (!empty($this->queryString)) {
             parse_str($this->queryString, $parameters);
         }
+
         return $parameters;
     }
 
-    public function stripQueryString() :string
+    public function stripQueryString(): string
     {
         return
             $this->rebuildScheme()
-            . $this->rebuildCredentials()
-            . $this->rebuildHostnameWithPort()
-            . $this->path
-            . $this->rebuildFragment();
+            .$this->rebuildCredentials()
+            .$this->rebuildHostnameWithPort()
+            .$this->path
+            .$this->rebuildFragment();
     }
 
     /**
      * @param array $parameters
+     *
      * @return string
      */
     private function buildUrl(array $parameters): string
     {
-        return urldecode($this->stripQueryString() . '?' . http_build_query($parameters));
+        return urldecode($this->stripQueryString().'?'.http_build_query($parameters));
     }
 
     // region Parameter Manipulation
-    public function manipulateParameter(string $parameterToManipulate, string $newValue) :string
+    public function manipulateParameter(string $parameterToManipulate, string $newValue): string
     {
         $parameters = $this->getQueryParameters();
 
@@ -116,10 +117,11 @@ class Parser
         }
 
         $parameters[$parameterToManipulate] = $newValue;
+
         return $this->buildUrl($parameters);
     }
 
-    public function addParameter(string $newParameter, string $newValue) :string
+    public function addParameter(string $newParameter, string $newValue): string
     {
         $parameters = $this->getQueryParameters();
 
@@ -132,7 +134,7 @@ class Parser
         return $this->buildUrl($parameters);
     }
 
-    public function removeParameter(string $parameterToRemove) :string
+    public function removeParameter(string $parameterToRemove): string
     {
         $parameters = $this->getQueryParameters();
 
@@ -146,10 +148,11 @@ class Parser
             $this->buildUrl($parameters)
             : $this->stripQueryString();
     }
+
     // endregion
 
     // region Array values manipulation
-    public function removeMultipleValue($arrayKey, $arrayValue) :string
+    public function removeMultipleValue($arrayKey, $arrayValue): string
     {
         $parameters = $this->getQueryParameters();
 
@@ -163,7 +166,7 @@ class Parser
         return $this->buildUrl($parameters);
     }
 
-    public function manipulateMultipleValue($arrayKey, $oldValue, $newValue) :string
+    public function manipulateMultipleValue($arrayKey, $oldValue, $newValue): string
     {
         $parameters = $this->getQueryParameters();
 
@@ -182,7 +185,7 @@ class Parser
         return $this->buildUrl($parameters);
     }
 
-    public function addMultipleValue($arrayKey, $newValue) :string
+    public function addMultipleValue($arrayKey, $newValue): string
     {
         $parameters = $this->getQueryParameters();
 
@@ -196,9 +199,11 @@ class Parser
 
         return $this->buildUrl($parameters);
     }
+
     // endregion
 
     // region Getters
+
     /**
      * @return string
      */
@@ -262,27 +267,31 @@ class Parser
     {
         return $this->fragment;
     }
+
     // endregion
 
     // region Rebuilder
+
     /**
      * @return string
      */
     private function rebuildScheme(): string
     {
-        return $this->scheme . '://';
+        return $this->scheme.'://';
     }
 
-    private function rebuildCredentials() :string
+    private function rebuildCredentials(): string
     {
-        $postfix = ($this->username || $this->password) ? "@" : '';
+        $postfix = ($this->username || $this->password) ? '@' : '';
         $separator = ($this->password) ? ':' : '';
+
         return "{$this->username}{$separator}{$this->password}{$postfix}";
     }
 
     private function rebuildHostnameWithPort()
     {
         $separator = ($this->port) ? ':' : '';
+
         return "{$this->host}{$separator}{$this->port}";
     }
 
@@ -291,7 +300,8 @@ class Parser
      */
     private function rebuildFragment(): string
     {
-        return (!empty($this->fragment) ? '#' . $this->fragment : '');
+        return !empty($this->fragment) ? '#'.$this->fragment : '';
     }
+
     // endregion
 }
