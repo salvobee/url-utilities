@@ -1,8 +1,6 @@
 <?php
 
-
 namespace SalvoBee\UrlUtilities\Dictionaries;
-
 
 class UrlComponents
 {
